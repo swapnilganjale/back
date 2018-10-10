@@ -31,6 +31,12 @@ public class UploadController {
 
 	List<String> files = new ArrayList<String>();
 
+	@GetMapping(path = { "/test" })
+	@ResponseBody
+	public String test() {
+		return "upload";
+	}
+
 	@PostMapping("/post")
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
 		String message = "";
