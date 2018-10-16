@@ -8,6 +8,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
@@ -16,6 +19,8 @@ import org.springframework.security.oauth2.provider.request.DefaultOAuth2Request
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
+import com.org.back.service.UserDetailsServiceImpl;
+
 @Configuration
 @EnableWebSecurity
 public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -23,12 +28,14 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private ClientDetailsService clientDetailsService;
 
 	@Autowired
-	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("bill").password("{noop}abc123").roles("ADMIN")
-				.and().withUser("bob").password("{noop}abc123").roles("USER");
-	}
-
+	PasswordEncoder encoder;
 	
+//	@Autowired
+//	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.inMemoryAuthentication().withUser("bill").password("{noop}abc123").roles("ADMIN").and().withUser("bob")
+//				.password("{noop}abc123").roles("USER");
+//	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().anonymous().disable().authorizeRequests().antMatchers("/oauth/token").permitAll();
@@ -63,5 +70,13 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return store;
 	}
 
- 
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.eraseCredentials(false).userDetailsService(userDetails()).passwordEncoder(encoder);
+	}
+
+	@Bean
+	public UserDetailsService userDetails() {
+		return new UserDetailsServiceImpl();
+	}
 }

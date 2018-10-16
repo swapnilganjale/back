@@ -1,8 +1,10 @@
 package com.org.back.controller;
+
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,56 +18,57 @@ import org.springframework.web.bind.annotation.RestController;
 import com.org.back.dto.PageDTO;
 import com.org.back.model.User;
 import com.org.back.service.UserService;
+
 @CrossOrigin
 @RestController
-@RequestMapping({"/user"})
+@RequestMapping({ "/user" })
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-   
-    @GetMapping(path = {"/test"})
-    public String test(){
-        return "user";
-    }
+	@Autowired
+	private UserService userService;
 
-    @PostMapping
-    public User create(@RequestBody User user){
-        return userService.create(user);
-    }
+	@GetMapping(path = { "/test" })
+	public String test() {
 
-    @GetMapping(path = {"/{id}"})
-    public User findOne(@PathVariable("id") int id){
-        return userService.findById(id);
-    }
+		return "user";
+	}
 
-    @PutMapping
-    public User update(@RequestBody User user){
-        return userService.update(user);
-    }
+	@PostMapping
+	public User create(@RequestBody User user) {
+		return userService.create(user);
+	}
 
-    @DeleteMapping(path ={"/{id}"})
-    public User delete(@PathVariable("id") int id) {
-        return userService.delete(id);
-    }
+	@GetMapping(path = { "/{id}" })
+	public User findOne(@PathVariable("id") int id) {
+		return userService.findById(id);
+	}
 
-    @GetMapping
-    public List findAll(){
-       return userService.findAll();
-    }
-    
-   
-	@PostMapping(path={"/list"})
-    public PageDTO<User> list(@RequestBody Map map) {
-    	System.out.println("list call");
-    	System.out.println(map);
-    	return userService.list(map);
-    }
-	
-	@PostMapping(path={"/search"})
-    public PageDTO<User> search(@RequestBody Map map) {
-    	System.out.println("search call");
-    	System.out.println(map);
-    	return userService.search(map);
-    }
+	@PutMapping
+	public User update(@RequestBody User user) {
+		return userService.update(user);
+	}
+
+	@DeleteMapping(path = { "/{id}" })
+	public User delete(@PathVariable("id") int id) {
+		return userService.delete(id);
+	}
+
+	@GetMapping
+	public List findAll() {
+		return userService.findAll();
+	}
+
+	@PostMapping(path = { "/list" })
+	public PageDTO<User> list(@RequestBody Map map) {
+		System.out.println("list call");
+		System.out.println(map);
+		return userService.list(map);
+	}
+
+	@PostMapping(path = { "/search" })
+	public PageDTO<User> search(@RequestBody Map map) {
+		System.out.println("search call");
+		System.out.println(map);
+		return userService.search(map);
+	}
 }

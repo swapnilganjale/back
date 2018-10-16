@@ -1,7 +1,9 @@
 package com.org.back.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -27,9 +29,15 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 	}
 
 	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.anonymous().disable().requestMatchers().antMatchers("/user/**").and().authorizeRequests()
-				.antMatchers("/user/**").access("hasRole('ADMIN')").antMatchers("/upload/**").access("hasRole('USER')").and().exceptionHandling()			
-				.accessDeniedHandler(new OAuth2AccessDeniedHandler());
-	}
+    public void configure(HttpSecurity http) throws Exception {
+ 
+        http.
+         anonymous().disable()
+        .requestMatchers().antMatchers("/user/**")
+        .requestMatchers().antMatchers("/upload/**")
+        .and().authorizeRequests()
+        .antMatchers("/user/**").authenticated()
+        .antMatchers("/upload/**").authenticated()
+        .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+    }
 }

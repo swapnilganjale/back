@@ -16,10 +16,17 @@ public class User {
 	private String name;
 	private String email;
 	private String password;
-
+	private String role;
 
 	public User() {
 
+	}
+
+	public User(String email, String password, String role) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.role = role;
 	}
 
 	public User(String firstname) {
@@ -61,6 +68,14 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

@@ -3,8 +3,6 @@ package com.org.back.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
-
 import com.org.back.dto.PageDTO;
 import com.org.back.model.User;
 
