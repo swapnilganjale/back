@@ -25,6 +25,7 @@ import com.org.back.service.StorageService;
 
 @Controller
 @RequestMapping("/upload")
+@PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
 public class UploadController {
 
 	@Autowired

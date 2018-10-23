@@ -39,7 +39,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("my-trusted-client")
+		clients.inMemory().withClient("client")
 				.authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
 				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT").scopes("read", "write", "trust").secret(passwordEncoder.encode("secret"))
 				.accessTokenValiditySeconds(120).// Access token is only valid for 2 minutes.

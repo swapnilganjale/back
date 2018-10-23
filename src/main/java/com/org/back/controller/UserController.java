@@ -22,6 +22,7 @@ import com.org.back.service.UserService;
 @CrossOrigin
 @RestController
 @RequestMapping({ "/user" })
+@PreAuthorize("hasAuthority('ADMIN_USER')")
 public class UserController {
 
 	@Autowired

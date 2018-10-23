@@ -7,5 +7,5 @@ import com.org.back.model.User;
 
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Integer> {
-	User findByEmail(String email);
+	User findByUsername(String userName);
 }
